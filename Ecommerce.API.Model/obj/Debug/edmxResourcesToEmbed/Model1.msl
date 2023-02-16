@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ECOMMERCE_CARSModelStoreContainer" CdmEntityContainer="ECOMMERCE_CARSEntities">
+    <EntitySetMapping Name="CARACTERISTICA">
+      <EntityTypeMapping TypeName="ECOMMERCE_CARSModel.CARACTERISTICA">
+        <MappingFragment StoreEntitySet="CARACTERISTICA">
+          <ScalarProperty Name="CADescricao" ColumnName="CADescricao" />
+          <ScalarProperty Name="CACodigo" ColumnName="CACodigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CARACTERISTICAS_CARRO">
+      <EntityTypeMapping TypeName="ECOMMERCE_CARSModel.CARACTERISTICAS_CARRO">
+        <MappingFragment StoreEntitySet="CARACTERISTICAS_CARRO">
+          <ScalarProperty Name="CCodCaracteristica" ColumnName="CCodCaracteristica" />
+          <ScalarProperty Name="CCodCarro" ColumnName="CCodCarro" />
+          <ScalarProperty Name="CCOdigo" ColumnName="CCOdigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CARRO">
+      <EntityTypeMapping TypeName="ECOMMERCE_CARSModel.CARRO">
+        <MappingFragment StoreEntitySet="CARRO">
+          <ScalarProperty Name="CAVendido" ColumnName="CAVendido" />
+          <ScalarProperty Name="CAPreco" ColumnName="CAPreco" />
+          <ScalarProperty Name="CAPlaca" ColumnName="CAPlaca" />
+          <ScalarProperty Name="CAAno" ColumnName="CAAno" />
+          <ScalarProperty Name="CACodModelo" ColumnName="CACodModelo" />
+          <ScalarProperty Name="CACodigo" ColumnName="CACodigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CLIENTE">
+      <EntityTypeMapping TypeName="ECOMMERCE_CARSModel.CLIENTE">
+        <MappingFragment StoreEntitySet="CLIENTE">
+          <ScalarProperty Name="CLEmail" ColumnName="CLEmail" />
+          <ScalarProperty Name="CLTelefone" ColumnName="CLTelefone" />
+          <ScalarProperty Name="CLNome" ColumnName="CLNome" />
+          <ScalarProperty Name="CLCodigo" ColumnName="CLCodigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FOTO">
+      <EntityTypeMapping TypeName="ECOMMERCE_CARSModel.FOTO">
+        <MappingFragment StoreEntitySet="FOTO">
+          <ScalarProperty Name="FOMimeType" ColumnName="FOMimeType" />
+          <ScalarProperty Name="FOCodCarro" ColumnName="FOCodCarro" />
+          <ScalarProperty Name="FOFoto" ColumnName="FOFoto" />
+          <ScalarProperty Name="FOCodigo" ColumnName="FOCodigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MARCA_CARRO">
+      <EntityTypeMapping TypeName="ECOMMERCE_CARSModel.MARCA_CARRO">
+        <MappingFragment StoreEntitySet="MARCA_CARRO">
+          <ScalarProperty Name="MADescricao" ColumnName="MADescricao" />
+          <ScalarProperty Name="MACodigo" ColumnName="MACodigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MODELO_CARRO">
+      <EntityTypeMapping TypeName="ECOMMERCE_CARSModel.MODELO_CARRO">
+        <MappingFragment StoreEntitySet="MODELO_CARRO">
+          <ScalarProperty Name="MOCodMarca" ColumnName="MOCodMarca" />
+          <ScalarProperty Name="MODescricao" ColumnName="MODescricao" />
+          <ScalarProperty Name="MOCodigo" ColumnName="MOCodigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VENDA">
+      <EntityTypeMapping TypeName="ECOMMERCE_CARSModel.VENDA">
+        <MappingFragment StoreEntitySet="VENDA">
+          <ScalarProperty Name="VECodCliente" ColumnName="VECodCliente" />
+          <ScalarProperty Name="VEData" ColumnName="VEData" />
+          <ScalarProperty Name="VECodCarro" ColumnName="VECodCarro" />
+          <ScalarProperty Name="VECodigo" ColumnName="VECodigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

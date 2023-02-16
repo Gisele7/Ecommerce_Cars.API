@@ -1,0 +1,511 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ECOMMERCE_CARSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CARACTERISTICA">
+          <Key>
+            <PropertyRef Name="CACodigo" />
+          </Key>
+          <Property Name="CACodigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CADescricao" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="CARACTERISTICAS_CARRO">
+          <Key>
+            <PropertyRef Name="CCOdigo" />
+          </Key>
+          <Property Name="CCOdigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CCodCarro" Type="int" />
+          <Property Name="CCodCaracteristica" Type="int" />
+        </EntityType>
+        <EntityType Name="CARRO">
+          <Key>
+            <PropertyRef Name="CACodigo" />
+          </Key>
+          <Property Name="CACodigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CACodModelo" Type="int" />
+          <Property Name="CAAno" Type="int" />
+          <Property Name="CAPlaca" Type="varchar" MaxLength="10" />
+          <Property Name="CAPreco" Type="money" />
+          <Property Name="CAVendido" Type="bit" />
+        </EntityType>
+        <EntityType Name="CLIENTE">
+          <Key>
+            <PropertyRef Name="CLCodigo" />
+          </Key>
+          <Property Name="CLCodigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CLNome" Type="varchar" MaxLength="100" />
+          <Property Name="CLTelefone" Type="varchar" MaxLength="14" />
+          <Property Name="CLEmail" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="FOTO">
+          <Key>
+            <PropertyRef Name="FOCodigo" />
+          </Key>
+          <Property Name="FOCodigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FOFoto" Type="varbinary(max)" />
+          <Property Name="FOCodCarro" Type="int" />
+          <Property Name="FOMimeType" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="MARCA_CARRO">
+          <Key>
+            <PropertyRef Name="MACodigo" />
+          </Key>
+          <Property Name="MACodigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MADescricao" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MODELO_CARRO">
+          <Key>
+            <PropertyRef Name="MOCodigo" />
+          </Key>
+          <Property Name="MOCodigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MODescricao" Type="varchar" MaxLength="100" />
+          <Property Name="MOCodMarca" Type="int" />
+        </EntityType>
+        <EntityType Name="VENDA">
+          <Key>
+            <PropertyRef Name="VECodigo" />
+          </Key>
+          <Property Name="VECodigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VECodCarro" Type="int" />
+          <Property Name="VEData" Type="datetime" />
+          <Property Name="VECodCliente" Type="int" />
+        </EntityType>
+        <Association Name="FK_CARACTERISTICAS_CARRO_CARACTERISTICA">
+          <End Role="CARACTERISTICA" Type="Self.CARACTERISTICA" Multiplicity="0..1" />
+          <End Role="CARACTERISTICAS_CARRO" Type="Self.CARACTERISTICAS_CARRO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARACTERISTICA">
+              <PropertyRef Name="CACodigo" />
+            </Principal>
+            <Dependent Role="CARACTERISTICAS_CARRO">
+              <PropertyRef Name="CCodCaracteristica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CARACTERISTICAS_CARRO_CARRO">
+          <End Role="CARRO" Type="Self.CARRO" Multiplicity="0..1" />
+          <End Role="CARACTERISTICAS_CARRO" Type="Self.CARACTERISTICAS_CARRO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARRO">
+              <PropertyRef Name="CACodigo" />
+            </Principal>
+            <Dependent Role="CARACTERISTICAS_CARRO">
+              <PropertyRef Name="CCodCarro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CARRO_MODELO_CARRO">
+          <End Role="MODELO_CARRO" Type="Self.MODELO_CARRO" Multiplicity="0..1" />
+          <End Role="CARRO" Type="Self.CARRO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MODELO_CARRO">
+              <PropertyRef Name="MOCodigo" />
+            </Principal>
+            <Dependent Role="CARRO">
+              <PropertyRef Name="CACodModelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FOTO_CARRO">
+          <End Role="CARRO" Type="Self.CARRO" Multiplicity="0..1" />
+          <End Role="FOTO" Type="Self.FOTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARRO">
+              <PropertyRef Name="CACodigo" />
+            </Principal>
+            <Dependent Role="FOTO">
+              <PropertyRef Name="FOCodCarro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MODELO_CARRO_MARCA_CARRO">
+          <End Role="MARCA_CARRO" Type="Self.MARCA_CARRO" Multiplicity="0..1" />
+          <End Role="MODELO_CARRO" Type="Self.MODELO_CARRO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARCA_CARRO">
+              <PropertyRef Name="MACodigo" />
+            </Principal>
+            <Dependent Role="MODELO_CARRO">
+              <PropertyRef Name="MOCodMarca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VENDA_CARRO">
+          <End Role="CARRO" Type="Self.CARRO" Multiplicity="0..1" />
+          <End Role="VENDA" Type="Self.VENDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARRO">
+              <PropertyRef Name="CACodigo" />
+            </Principal>
+            <Dependent Role="VENDA">
+              <PropertyRef Name="VECodCarro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VENDA_CLIENTE">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="0..1" />
+          <End Role="VENDA" Type="Self.VENDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="CLCodigo" />
+            </Principal>
+            <Dependent Role="VENDA">
+              <PropertyRef Name="VECodCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ECOMMERCE_CARSModelStoreContainer">
+          <EntitySet Name="CARACTERISTICA" EntityType="Self.CARACTERISTICA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CARACTERISTICAS_CARRO" EntityType="Self.CARACTERISTICAS_CARRO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CARRO" EntityType="Self.CARRO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FOTO" EntityType="Self.FOTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MARCA_CARRO" EntityType="Self.MARCA_CARRO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MODELO_CARRO" EntityType="Self.MODELO_CARRO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VENDA" EntityType="Self.VENDA" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CARACTERISTICAS_CARRO_CARACTERISTICA" Association="Self.FK_CARACTERISTICAS_CARRO_CARACTERISTICA">
+            <End Role="CARACTERISTICA" EntitySet="CARACTERISTICA" />
+            <End Role="CARACTERISTICAS_CARRO" EntitySet="CARACTERISTICAS_CARRO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CARACTERISTICAS_CARRO_CARRO" Association="Self.FK_CARACTERISTICAS_CARRO_CARRO">
+            <End Role="CARRO" EntitySet="CARRO" />
+            <End Role="CARACTERISTICAS_CARRO" EntitySet="CARACTERISTICAS_CARRO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CARRO_MODELO_CARRO" Association="Self.FK_CARRO_MODELO_CARRO">
+            <End Role="MODELO_CARRO" EntitySet="MODELO_CARRO" />
+            <End Role="CARRO" EntitySet="CARRO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FOTO_CARRO" Association="Self.FK_FOTO_CARRO">
+            <End Role="CARRO" EntitySet="CARRO" />
+            <End Role="FOTO" EntitySet="FOTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MODELO_CARRO_MARCA_CARRO" Association="Self.FK_MODELO_CARRO_MARCA_CARRO">
+            <End Role="MARCA_CARRO" EntitySet="MARCA_CARRO" />
+            <End Role="MODELO_CARRO" EntitySet="MODELO_CARRO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VENDA_CARRO" Association="Self.FK_VENDA_CARRO">
+            <End Role="CARRO" EntitySet="CARRO" />
+            <End Role="VENDA" EntitySet="VENDA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VENDA_CLIENTE" Association="Self.FK_VENDA_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="VENDA" EntitySet="VENDA" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ECOMMERCE_CARSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ECOMMERCE_CARSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CARACTERISTICA" EntityType="ECOMMERCE_CARSModel.CARACTERISTICA" />
+          <EntitySet Name="CARACTERISTICAS_CARRO" EntityType="ECOMMERCE_CARSModel.CARACTERISTICAS_CARRO" />
+          <EntitySet Name="CARRO" EntityType="ECOMMERCE_CARSModel.CARRO" />
+          <EntitySet Name="CLIENTE" EntityType="ECOMMERCE_CARSModel.CLIENTE" />
+          <EntitySet Name="FOTO" EntityType="ECOMMERCE_CARSModel.FOTO" />
+          <EntitySet Name="MARCA_CARRO" EntityType="ECOMMERCE_CARSModel.MARCA_CARRO" />
+          <EntitySet Name="MODELO_CARRO" EntityType="ECOMMERCE_CARSModel.MODELO_CARRO" />
+          <EntitySet Name="VENDA" EntityType="ECOMMERCE_CARSModel.VENDA" />
+          <AssociationSet Name="FK_CARACTERISTICAS_CARRO_CARACTERISTICA" Association="ECOMMERCE_CARSModel.FK_CARACTERISTICAS_CARRO_CARACTERISTICA">
+            <End Role="CARACTERISTICA" EntitySet="CARACTERISTICA" />
+            <End Role="CARACTERISTICAS_CARRO" EntitySet="CARACTERISTICAS_CARRO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CARACTERISTICAS_CARRO_CARRO" Association="ECOMMERCE_CARSModel.FK_CARACTERISTICAS_CARRO_CARRO">
+            <End Role="CARRO" EntitySet="CARRO" />
+            <End Role="CARACTERISTICAS_CARRO" EntitySet="CARACTERISTICAS_CARRO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CARRO_MODELO_CARRO" Association="ECOMMERCE_CARSModel.FK_CARRO_MODELO_CARRO">
+            <End Role="MODELO_CARRO" EntitySet="MODELO_CARRO" />
+            <End Role="CARRO" EntitySet="CARRO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FOTO_CARRO" Association="ECOMMERCE_CARSModel.FK_FOTO_CARRO">
+            <End Role="CARRO" EntitySet="CARRO" />
+            <End Role="FOTO" EntitySet="FOTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VENDA_CARRO" Association="ECOMMERCE_CARSModel.FK_VENDA_CARRO">
+            <End Role="CARRO" EntitySet="CARRO" />
+            <End Role="VENDA" EntitySet="VENDA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VENDA_CLIENTE" Association="ECOMMERCE_CARSModel.FK_VENDA_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="VENDA" EntitySet="VENDA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MODELO_CARRO_MARCA_CARRO" Association="ECOMMERCE_CARSModel.FK_MODELO_CARRO_MARCA_CARRO">
+            <End Role="MARCA_CARRO" EntitySet="MARCA_CARRO" />
+            <End Role="MODELO_CARRO" EntitySet="MODELO_CARRO" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CARACTERISTICA">
+          <Key>
+            <PropertyRef Name="CACodigo" />
+          </Key>
+          <Property Name="CACodigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CADescricao" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CARACTERISTICAS_CARRO" Relationship="ECOMMERCE_CARSModel.FK_CARACTERISTICAS_CARRO_CARACTERISTICA" FromRole="CARACTERISTICA" ToRole="CARACTERISTICAS_CARRO" />
+        </EntityType>
+        <EntityType Name="CARACTERISTICAS_CARRO">
+          <Key>
+            <PropertyRef Name="CCOdigo" />
+          </Key>
+          <Property Name="CCOdigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CCodCarro" Type="Int32" />
+          <Property Name="CCodCaracteristica" Type="Int32" />
+          <NavigationProperty Name="CARACTERISTICA" Relationship="ECOMMERCE_CARSModel.FK_CARACTERISTICAS_CARRO_CARACTERISTICA" FromRole="CARACTERISTICAS_CARRO" ToRole="CARACTERISTICA" />
+          <NavigationProperty Name="CARRO" Relationship="ECOMMERCE_CARSModel.FK_CARACTERISTICAS_CARRO_CARRO" FromRole="CARACTERISTICAS_CARRO" ToRole="CARRO" />
+        </EntityType>
+        <EntityType Name="CARRO">
+          <Key>
+            <PropertyRef Name="CACodigo" />
+          </Key>
+          <Property Name="CACodigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CACodModelo" Type="Int32" />
+          <Property Name="CAAno" Type="Int32" />
+          <Property Name="CAPlaca" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CAPreco" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CAVendido" Type="Boolean" />
+          <NavigationProperty Name="CARACTERISTICAS_CARRO" Relationship="ECOMMERCE_CARSModel.FK_CARACTERISTICAS_CARRO_CARRO" FromRole="CARRO" ToRole="CARACTERISTICAS_CARRO" />
+          <NavigationProperty Name="MODELO_CARRO" Relationship="ECOMMERCE_CARSModel.FK_CARRO_MODELO_CARRO" FromRole="CARRO" ToRole="MODELO_CARRO" />
+          <NavigationProperty Name="FOTO" Relationship="ECOMMERCE_CARSModel.FK_FOTO_CARRO" FromRole="CARRO" ToRole="FOTO" />
+          <NavigationProperty Name="VENDA" Relationship="ECOMMERCE_CARSModel.FK_VENDA_CARRO" FromRole="CARRO" ToRole="VENDA" />
+        </EntityType>
+        <EntityType Name="CLIENTE">
+          <Key>
+            <PropertyRef Name="CLCodigo" />
+          </Key>
+          <Property Name="CLCodigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CLNome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CLTelefone" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="CLEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="VENDA" Relationship="ECOMMERCE_CARSModel.FK_VENDA_CLIENTE" FromRole="CLIENTE" ToRole="VENDA" />
+        </EntityType>
+        <EntityType Name="FOTO">
+          <Key>
+            <PropertyRef Name="FOCodigo" />
+          </Key>
+          <Property Name="FOCodigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FOFoto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="FOCodCarro" Type="Int32" />
+          <Property Name="FOMimeType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CARRO" Relationship="ECOMMERCE_CARSModel.FK_FOTO_CARRO" FromRole="FOTO" ToRole="CARRO" />
+        </EntityType>
+        <EntityType Name="MARCA_CARRO">
+          <Key>
+            <PropertyRef Name="MACodigo" />
+          </Key>
+          <Property Name="MACodigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MADescricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MODELO_CARRO" Relationship="ECOMMERCE_CARSModel.FK_MODELO_CARRO_MARCA_CARRO" FromRole="MARCA_CARRO" ToRole="MODELO_CARRO" />
+        </EntityType>
+        <EntityType Name="MODELO_CARRO">
+          <Key>
+            <PropertyRef Name="MOCodigo" />
+          </Key>
+          <Property Name="MOCodigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MODescricao" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MOCodMarca" Type="Int32" />
+          <NavigationProperty Name="CARRO" Relationship="ECOMMERCE_CARSModel.FK_CARRO_MODELO_CARRO" FromRole="MODELO_CARRO" ToRole="CARRO" />
+          <NavigationProperty Name="MARCA_CARRO" Relationship="ECOMMERCE_CARSModel.FK_MODELO_CARRO_MARCA_CARRO" FromRole="MODELO_CARRO" ToRole="MARCA_CARRO" />
+        </EntityType>
+        <EntityType Name="VENDA">
+          <Key>
+            <PropertyRef Name="VECodigo" />
+          </Key>
+          <Property Name="VECodigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VECodCarro" Type="Int32" />
+          <Property Name="VEData" Type="DateTime" Precision="3" />
+          <Property Name="VECodCliente" Type="Int32" />
+          <NavigationProperty Name="CARRO" Relationship="ECOMMERCE_CARSModel.FK_VENDA_CARRO" FromRole="VENDA" ToRole="CARRO" />
+          <NavigationProperty Name="CLIENTE" Relationship="ECOMMERCE_CARSModel.FK_VENDA_CLIENTE" FromRole="VENDA" ToRole="CLIENTE" />
+        </EntityType>
+        <Association Name="FK_CARACTERISTICAS_CARRO_CARACTERISTICA">
+          <End Type="ECOMMERCE_CARSModel.CARACTERISTICA" Role="CARACTERISTICA" Multiplicity="0..1" />
+          <End Type="ECOMMERCE_CARSModel.CARACTERISTICAS_CARRO" Role="CARACTERISTICAS_CARRO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARACTERISTICA">
+              <PropertyRef Name="CACodigo" />
+            </Principal>
+            <Dependent Role="CARACTERISTICAS_CARRO">
+              <PropertyRef Name="CCodCaracteristica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CARACTERISTICAS_CARRO_CARRO">
+          <End Type="ECOMMERCE_CARSModel.CARRO" Role="CARRO" Multiplicity="0..1" />
+          <End Type="ECOMMERCE_CARSModel.CARACTERISTICAS_CARRO" Role="CARACTERISTICAS_CARRO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARRO">
+              <PropertyRef Name="CACodigo" />
+            </Principal>
+            <Dependent Role="CARACTERISTICAS_CARRO">
+              <PropertyRef Name="CCodCarro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CARRO_MODELO_CARRO">
+          <End Type="ECOMMERCE_CARSModel.MODELO_CARRO" Role="MODELO_CARRO" Multiplicity="0..1" />
+          <End Type="ECOMMERCE_CARSModel.CARRO" Role="CARRO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MODELO_CARRO">
+              <PropertyRef Name="MOCodigo" />
+            </Principal>
+            <Dependent Role="CARRO">
+              <PropertyRef Name="CACodModelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FOTO_CARRO">
+          <End Type="ECOMMERCE_CARSModel.CARRO" Role="CARRO" Multiplicity="0..1" />
+          <End Type="ECOMMERCE_CARSModel.FOTO" Role="FOTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARRO">
+              <PropertyRef Name="CACodigo" />
+            </Principal>
+            <Dependent Role="FOTO">
+              <PropertyRef Name="FOCodCarro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VENDA_CARRO">
+          <End Type="ECOMMERCE_CARSModel.CARRO" Role="CARRO" Multiplicity="0..1" />
+          <End Type="ECOMMERCE_CARSModel.VENDA" Role="VENDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARRO">
+              <PropertyRef Name="CACodigo" />
+            </Principal>
+            <Dependent Role="VENDA">
+              <PropertyRef Name="VECodCarro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VENDA_CLIENTE">
+          <End Type="ECOMMERCE_CARSModel.CLIENTE" Role="CLIENTE" Multiplicity="0..1" />
+          <End Type="ECOMMERCE_CARSModel.VENDA" Role="VENDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="CLCodigo" />
+            </Principal>
+            <Dependent Role="VENDA">
+              <PropertyRef Name="VECodCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MODELO_CARRO_MARCA_CARRO">
+          <End Type="ECOMMERCE_CARSModel.MARCA_CARRO" Role="MARCA_CARRO" Multiplicity="0..1" />
+          <End Type="ECOMMERCE_CARSModel.MODELO_CARRO" Role="MODELO_CARRO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARCA_CARRO">
+              <PropertyRef Name="MACodigo" />
+            </Principal>
+            <Dependent Role="MODELO_CARRO">
+              <PropertyRef Name="MOCodMarca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ECOMMERCE_CARSModelStoreContainer" CdmEntityContainer="ECOMMERCE_CARSEntities">
+          <EntitySetMapping Name="CARACTERISTICA">
+            <EntityTypeMapping TypeName="ECOMMERCE_CARSModel.CARACTERISTICA">
+              <MappingFragment StoreEntitySet="CARACTERISTICA">
+                <ScalarProperty Name="CADescricao" ColumnName="CADescricao" />
+                <ScalarProperty Name="CACodigo" ColumnName="CACodigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CARACTERISTICAS_CARRO">
+            <EntityTypeMapping TypeName="ECOMMERCE_CARSModel.CARACTERISTICAS_CARRO">
+              <MappingFragment StoreEntitySet="CARACTERISTICAS_CARRO">
+                <ScalarProperty Name="CCodCaracteristica" ColumnName="CCodCaracteristica" />
+                <ScalarProperty Name="CCodCarro" ColumnName="CCodCarro" />
+                <ScalarProperty Name="CCOdigo" ColumnName="CCOdigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CARRO">
+            <EntityTypeMapping TypeName="ECOMMERCE_CARSModel.CARRO">
+              <MappingFragment StoreEntitySet="CARRO">
+                <ScalarProperty Name="CAVendido" ColumnName="CAVendido" />
+                <ScalarProperty Name="CAPreco" ColumnName="CAPreco" />
+                <ScalarProperty Name="CAPlaca" ColumnName="CAPlaca" />
+                <ScalarProperty Name="CAAno" ColumnName="CAAno" />
+                <ScalarProperty Name="CACodModelo" ColumnName="CACodModelo" />
+                <ScalarProperty Name="CACodigo" ColumnName="CACodigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CLIENTE">
+            <EntityTypeMapping TypeName="ECOMMERCE_CARSModel.CLIENTE">
+              <MappingFragment StoreEntitySet="CLIENTE">
+                <ScalarProperty Name="CLEmail" ColumnName="CLEmail" />
+                <ScalarProperty Name="CLTelefone" ColumnName="CLTelefone" />
+                <ScalarProperty Name="CLNome" ColumnName="CLNome" />
+                <ScalarProperty Name="CLCodigo" ColumnName="CLCodigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FOTO">
+            <EntityTypeMapping TypeName="ECOMMERCE_CARSModel.FOTO">
+              <MappingFragment StoreEntitySet="FOTO">
+                <ScalarProperty Name="FOMimeType" ColumnName="FOMimeType" />
+                <ScalarProperty Name="FOCodCarro" ColumnName="FOCodCarro" />
+                <ScalarProperty Name="FOFoto" ColumnName="FOFoto" />
+                <ScalarProperty Name="FOCodigo" ColumnName="FOCodigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MARCA_CARRO">
+            <EntityTypeMapping TypeName="ECOMMERCE_CARSModel.MARCA_CARRO">
+              <MappingFragment StoreEntitySet="MARCA_CARRO">
+                <ScalarProperty Name="MADescricao" ColumnName="MADescricao" />
+                <ScalarProperty Name="MACodigo" ColumnName="MACodigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MODELO_CARRO">
+            <EntityTypeMapping TypeName="ECOMMERCE_CARSModel.MODELO_CARRO">
+              <MappingFragment StoreEntitySet="MODELO_CARRO">
+                <ScalarProperty Name="MOCodMarca" ColumnName="MOCodMarca" />
+                <ScalarProperty Name="MODescricao" ColumnName="MODescricao" />
+                <ScalarProperty Name="MOCodigo" ColumnName="MOCodigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VENDA">
+            <EntityTypeMapping TypeName="ECOMMERCE_CARSModel.VENDA">
+              <MappingFragment StoreEntitySet="VENDA">
+                <ScalarProperty Name="VECodCliente" ColumnName="VECodCliente" />
+                <ScalarProperty Name="VEData" ColumnName="VEData" />
+                <ScalarProperty Name="VECodCarro" ColumnName="VECodCarro" />
+                <ScalarProperty Name="VECodigo" ColumnName="VECodigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
